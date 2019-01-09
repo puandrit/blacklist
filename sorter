@@ -1,0 +1,4 @@
+#!/bin/sh
+CALLERID="${1/+/%2B}"
+EXTENSION="${2/+/%2B}"
+curl -s -H "User-Agent: Blacklist" "http://blacklist.satellitar.it/sorter.php?exten=$EXTENSION&caller=$CALLERID"

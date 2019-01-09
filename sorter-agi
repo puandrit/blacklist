@@ -1,0 +1,17 @@
+#!/bin/sh
+
+while read VAR ; do                     
+if [ -n ${VAR} ]; then
+        break         
+fi                    
+        if [ ${VAR:0:13} = "agi_callerid:" ]; then
+                CALLERID="$(echo -e "${VAR:14}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+		CALLERID="${CALLERID/+/%2B}"
+        fi                      
+        if [ ${VAR:0:14} = "agi_extension:" ]; then
+                EXTENSION="$(echo -e "${VAR:15}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+		EXTENSION="${EXTENSION/+/%2B}"
+        fi                      
+done       
+
+curl -s -H "User-Agent: Blacklist" "http://blacklist.satellitar.it/sorter.php?exten=$EXTENSION&caller=$CALLERID"
