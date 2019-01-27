@@ -29,7 +29,7 @@ for Contact in db:nrows("SELECT * FROM Contacts") do
    LineId = Contact.LineId
    LineIdSub = Contact.LineIdSub
    NumberReferenceList = Contact.NumberReferenceList
-   UUID = Contact.UUID
+   UUID = Contact.UUID:gsub("[\r\n]", "")
    
    sql = "INSERT INTO `Contacts` VALUES ("..Id..",'"..Name.."',NULL,'"..FirstName.."','"..Number.."',NULL,NULL,NULL,NULL,'"..NumberReferenceList.."','"..UUID.."');"
 
