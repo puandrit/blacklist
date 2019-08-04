@@ -1,3 +1,5 @@
+#!/usr/bin/lua
+
 require "lsqlite3"
 
 function trim(s)

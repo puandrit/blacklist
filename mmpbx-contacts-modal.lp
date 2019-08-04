@@ -3,6 +3,7 @@
 gettext.textdomain('webui-voice')
 
 local content_helper = require("web.content_helper")
+local proxy = require("datamodel")
 local ui_helper = require("web.ui_helper")
 local post_helper = require("web.post_helper")
 local table, ipairs = table, ipairs
@@ -89,7 +90,8 @@ end
 
 -- BEGIN
 if contact_helpmsg == nil then
-   os.execute("sudo -u root /usr/bin/lua /www/docroot/modals/mmpbx-blacklist.lp")
+   proxy.set("rpc.system.modgui.app.refresh_blacklist","1")
+   proxy.apply()
 end
 -- END
 %>
