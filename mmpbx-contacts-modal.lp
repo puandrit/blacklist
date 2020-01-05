@@ -1,4 +1,5 @@
-<%
+--pretranslated: do not change this file
+
 -- Localization
 gettext.textdomain('webui-voice')
 
@@ -84,6 +85,7 @@ local contact_options = {
   sorted = sort_func,
   onModify = refresh_blacklist,
   onAdd = refresh_blacklist,
+  onDelete = refresh_blacklist,
 }
 
 local contact_data, contact_helpmsg = post_helper.handleTableQuery(contact_columns, contact_options, nil, nil, contact_valid)
@@ -93,28 +95,26 @@ if ngx.var.args and string.len(ngx.var.args) > 0 then
   uri = uri .. "?" .. ngx.var.args
 end
 
-%>
+ngx.print( ui_helper.createHeader(T"Telephony", false, true) ); ngx.print('\
+\
+<div class="modal-body update">\
+  ')
 
-<%= ui_helper.createHeader(T"Telephony", false, true) %>
-
-<div class="modal-body update">
-  <%
   local lp = require("web.lp")
   lp.setpath("/www/snippets/")
   lp.include("tabs-voice.lp")
-  %>
-  <form class="form-horizontal" method="post" action="<%= uri %>">
-    <fieldset>
-<%
--- BEGIN
-%>
-      <legend><%= T"Blacklist v3.0.4" %></legend>
-<%
--- END 
-%>
-      <%=ui_helper.createTable(contact_columns, contact_data, contact_options, nil, contact_helpmsg)%>
-    </fieldset>
-  </form>
-</div>
-
-<%= ui_helper.createFooter() %>
+  
+  ngx.print('\
+  <form class="form-horizontal" method="post" action="<%= uri %>">\
+    <fieldset>\
+\
+      <legend>'); ngx.print( T"Blacklist v3.0.4" ); ngx.print('</legend>\
+\
+');
+      ngx.print(ui_helper.createTable(contact_columns, contact_data, contact_options, nil, contact_helpmsg))
+      ngx.print('\
+    </fieldset>\
+  </form>\
+</div>\
+');
+ngx.print(ui_helper.createFooter())
