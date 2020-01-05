@@ -7,6 +7,7 @@ local content_helper = require("web.content_helper")
 local ui_helper = require("web.ui_helper")
 local post_helper = require("web.post_helper")
 local table, ipairs = table, ipairs
+local proxy = require("datamodel")
 
 -- Shortcuts to validation helpers to make lines shorter
 local vNES = post_helper.validateNonEmptyString
@@ -74,7 +75,7 @@ if a["LastName"] == b["LastName"] then
 end
 
 local function refresh_blacklist()
-  os.execute("sudo -u root /usr/bin/lua /www/docroot/modals/mmpbx-blacklist.lp")
+  proxy.set("rpc.mmpbx.blacklist.refresh","1")
 end
 -- END
 
