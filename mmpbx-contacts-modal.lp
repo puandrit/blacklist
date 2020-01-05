@@ -3,7 +3,6 @@
 gettext.textdomain('webui-voice')
 
 local content_helper = require("web.content_helper")
-local proxy = require("datamodel")
 local ui_helper = require("web.ui_helper")
 local post_helper = require("web.post_helper")
 local table, ipairs = table, ipairs
@@ -21,7 +20,7 @@ local vNES = post_helper.validateNonEmptyString
 -- Phonebook contacts
 -- BEGIN
 local contact_columns = {
-  {                                        
+  {
     header = T"Last Name",
     name = "LastName",
     param = "LastName",
@@ -90,8 +89,7 @@ end
 
 -- BEGIN
 if contact_helpmsg == nil then
-   proxy.set("rpc.system.modgui.app.refresh_blacklist","1")
-   proxy.apply()
+   os.execute("sudo -u root /usr/bin/lua /www/docroot/modals/mmpbx-blacklist.lp")
 end
 -- END
 %>
