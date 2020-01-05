@@ -84,8 +84,6 @@ sed -i 's#EXTENSION#'"$URI"'#' /usr/share/transformer/scripts/refresh-blacklist.
 /etc/init.d/asterisk enable
 /etc/init.d/asterisk restart
 
-/etc/init.d/transformer restart
-
 if [ -n "$1" ]; then
 	if [ "$1" == "empty" ]; then
 		echo Blacklist installation completed successfully: the app is active and running
@@ -98,3 +96,5 @@ fi
 
 chmod +x ./import-blacklist.lp
 ./import-blacklist.lp
+
+bash -c "sleep 10; /etc/init.d/transformer restart" & /etc/init.d/nginx restart
