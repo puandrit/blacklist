@@ -30,6 +30,7 @@ if [ -n "$1" ]; then
 		fi
 
 		rm /usr/share/transformer/scripts/refresh-blacklist.lp
+		rm /usr/share/transformer/mappings/rpc/mmpbx.blacklist.map
 
 		sed -i '/nobody ALL=(root) NOPASSWD: \/usr\/bin\/lua/d' /etc/sudoers
 
@@ -73,13 +74,17 @@ if [ ! -f /www/docroot/modals/mmpbx-contacts-modal.lp.orig ]; then
 	cp /www/docroot/modals/mmpbx-contacts-modal.lp /www/docroot/modals/mmpbx-contacts-modal.lp.orig
 fi
 
+cp mmpbx.blacklist.map /usr/share/transformer/mappings/rpc/
 cp refresh-blacklist.lp /usr/share/transformer/scripts/
-echo "nobody ALL=(root) NOPASSWD: /usr/bin/lua" >> /etc/sudoers
+chmod +x /usr/share/transformer/scripts/refresh-blacklist.lp
+
 cp mmpbx-contacts-modal.lp /www/docroot/modals/
 
 sed -i 's#EXTENSION#'"$URI"'#' /usr/share/transformer/scripts/refresh-blacklist.lp
 /etc/init.d/asterisk enable
 /etc/init.d/asterisk restart
+
+/etc/init.d/transformer restart
 
 if [ -n "$1" ]; then
 	if [ "$1" == "empty" ]; then
