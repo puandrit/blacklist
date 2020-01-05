@@ -61,15 +61,15 @@ REGISTRAR=$(uci get mmpbxrvsipnet.@network[0].primary_registrar)
 REALM=$(uci get mmpbxrvsipnet.@network[0].realm)
 PORT=$(uci get mmpbxrvsipnet.@network[0].primary_registrar_port)
 DOMAIN=$(uci get mmpbxrvsipnet.@network[0].domain_name)
-sed -i 's#URI#'"$URI"'#' /etc/asterisk/sip.conf
-sed -i 's#USERNAME#'"$USERNAME"'#' /etc/asterisk/sip.conf
-sed -i 's#PASSWORD#'"$PASSWORD"'#' /etc/asterisk/sip.conf
-sed -i 's#PRIMARY_PROXY#'"$PRIMARY_PROXY"'#' /etc/asterisk/sip.conf
-sed -i 's#REGISTRAR#'"$REGISTRAR"'#' /etc/asterisk/sip.conf
-sed -i 's#REALM#'"$REALM"'#' /etc/asterisk/sip.conf
-sed -i 's#DOMAIN#'"$DOMAIN"'#' /etc/asterisk/sip.conf
-sed -i 's#PORT#'"$PORT"'#' /etc/asterisk/sip.conf
-#sed -i 's#;live_dangerously = no#live_dangerously = no#' /etc/asterisk/asterisk.conf
+sed -i 's#URI#'"$URI"'#g' /etc/asterisk/sip.conf
+sed -i 's#USERNAME#'"$USERNAME"'#g' /etc/asterisk/sip.conf
+sed -i 's#PASSWORD#'"$PASSWORD"'#g' /etc/asterisk/sip.conf
+sed -i 's#PRIMARY_PROXY#'"$PRIMARY_PROXY"'#g' /etc/asterisk/sip.conf
+sed -i 's#REGISTRAR#'"$REGISTRAR"'#g' /etc/asterisk/sip.conf
+sed -i 's#REALM#'"$REALM"'#g' /etc/asterisk/sip.conf
+sed -i 's#DOMAIN#'"$DOMAIN"'#g' /etc/asterisk/sip.conf
+sed -i 's#PORT#'"$PORT"'#g' /etc/asterisk/sip.conf
+#sed -i 's#;live_dangerously = no#live_dangerously = no#g' /etc/asterisk/asterisk.conf
 if [ ! -f /www/docroot/modals/mmpbx-contacts-modal.lp.orig ]; then
 	cp /www/docroot/modals/mmpbx-contacts-modal.lp /www/docroot/modals/mmpbx-contacts-modal.lp.orig
 fi
@@ -80,7 +80,7 @@ chmod +x /usr/share/transformer/scripts/refresh-blacklist.lp
 
 cp mmpbx-contacts-modal.lp /www/docroot/modals/
 
-sed -i 's#EXTENSION#'"$URI"'#' /usr/share/transformer/scripts/refresh-blacklist.lp
+sed -i 's#EXTENSION#'"$URI"'#g' /usr/share/transformer/scripts/refresh-blacklist.lp
 /etc/init.d/asterisk enable
 /etc/init.d/asterisk restart
 
