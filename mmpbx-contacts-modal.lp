@@ -71,6 +71,10 @@ if a["LastName"] == b["LastName"] then
    	return tolower(a["LastName"]) < tolower(b["LastName"])
    end
 end
+
+local function refresh_blacklist()
+  os.execute("sudo -u root /usr/bin/lua /www/docroot/modals/mmpbx-blacklist.lp")
+end
 -- END
 
 local contact_options = {
@@ -78,6 +82,8 @@ local contact_options = {
   basepath = "rpc.mmpbx.phonebook_entry.@.",
   createMsg = T"Add new contact",
   sorted = sort_func,
+  onModify = refresh_blacklist,
+  onAdd = refresh_blacklist,
 }
 
 local contact_data, contact_helpmsg = post_helper.handleTableQuery(contact_columns, contact_options, nil, nil, contact_valid)
@@ -87,11 +93,6 @@ if ngx.var.args and string.len(ngx.var.args) > 0 then
   uri = uri .. "?" .. ngx.var.args
 end
 
--- BEGIN
-if contact_helpmsg == nil then
-   os.execute("sudo -u root /usr/bin/lua /www/docroot/modals/mmpbx-blacklist.lp")
-end
--- END
 %>
 
 <%= ui_helper.createHeader(T"Telephony", false, true) %>
