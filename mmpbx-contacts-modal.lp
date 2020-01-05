@@ -105,7 +105,7 @@ ngx.print( ui_helper.createHeader(T"Telephony", false, true) ); ngx.print('\
   lp.include("tabs-voice.lp")
   
   ngx.print('\
-  <form class="form-horizontal" method="post" action="<%= uri %>">\
+  <form class="form-horizontal" method="post" action="'); ngx.print( uri ); ngx.print('">\
     <fieldset>\
 \
       <legend>'); ngx.print( T"Blacklist v3.0.4" ); ngx.print('</legend>\
