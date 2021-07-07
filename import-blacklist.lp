@@ -1,3 +1,5 @@
+#!/usr/bin/lua
+
 require "lsqlite3"
 
 function file_exists(file)
@@ -38,4 +40,4 @@ end
 
 db:close()
 
-os.execute("/usr/bin/lua /www/docroot/modals/mmpbx-blacklist.lp")
+os.execute("/usr/share/transformer/scripts/refresh-blacklist.lp")

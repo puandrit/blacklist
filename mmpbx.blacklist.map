@@ -1,0 +1,32 @@
+local async_exec = require("lasync").execute
+
+local refresh_command = "/usr/share/transformer/scripts/refresh-blacklist.lp"
+
+local MMPBX_BLACKLIST_ = {
+  objectType = {
+    name = 'rpc.mmpbx.blacklist.',
+    access = 'readOnly',
+    minEntries = 1,
+    maxEntries = 1,
+    parameters = {
+      refresh = {
+        access = "readWrite",
+        type = "boolean",
+      }
+    }
+  }
+}
+
+MMPBX_BLACKLIST_.get = {
+  refresh = "0",
+}
+
+MMPBX_BLACKLIST_.set = {
+  refresh = function(mapping, paramName, paramValue)  
+    if paramValue == "1" then
+      async_exec({[refresh_command]=true})
+    end
+  end,
+}
+
+register(MMPBX_BLACKLIST_)
